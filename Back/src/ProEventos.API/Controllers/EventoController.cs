@@ -32,6 +32,12 @@ namespace ProEventos.API.Controllers
             return _context.Eventos.FirstOrDefault(x => x.EventoId == id);
         }
 
+        [HttpGet()]
+        public IEnumerable<Evento> Getteste()
+        {
+            return _context.Eventos;
+        }
+
         [HttpPost]
         public string Post()
         {
