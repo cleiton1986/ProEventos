@@ -10,6 +10,7 @@ import { PalestrantesComponent } from './palestrantes/palestrantes.component';
 import { CollapseModule } from 'ngx-bootstrap/collapse'
 import { NavComponent } from './nav/nav.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppRoutingModule,
     HttpClientModule,
     CollapseModule.forRoot(),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    FormsModule
     //FontAwesomeModule,
     //BrowserAnimationsModule
   ],
