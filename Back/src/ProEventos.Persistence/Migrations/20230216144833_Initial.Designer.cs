@@ -3,12 +3,13 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProEventos.Persistence.Contexto;
 
 namespace ProEventos.Persistence.Migrations
 {
     [DbContext(typeof(ProEventosContext))]
-    [Migration("20230213235700_Initial")]
+    [Migration("20230216144833_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -139,7 +140,7 @@ namespace ProEventos.Persistence.Migrations
                     b.Property<int?>("PalestranteId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("URAL")
+                    b.Property<string>("URL")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -185,11 +186,13 @@ namespace ProEventos.Persistence.Migrations
                 {
                     b.HasOne("ProEventos.API.Evento", "Evento")
                         .WithMany("RedeSociais")
-                        .HasForeignKey("EventoId");
+                        .HasForeignKey("EventoId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("ProEventos.Domain.Palestrante", "Palestrante")
                         .WithMany("RedeSociais")
-                        .HasForeignKey("PalestranteId");
+                        .HasForeignKey("PalestranteId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Evento");
 
