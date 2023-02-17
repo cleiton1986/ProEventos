@@ -3,6 +3,8 @@ import { Component, TemplateRef } from '@angular/core';
 import { Evento } from 'models/Evento';
 import { BsComponentRef } from 'ngx-bootstrap/component-loader';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { ToastrService } from 'ngx-toastr';
 import { EventoService } from '../services/evento.service';
 
 @Component({
@@ -40,7 +42,9 @@ export class EventosComponent  {
   };
 
   constructor(private eventoService: EventoService,
-    private modalService: BsModalService) { }
+    private modalService: BsModalService,
+    private toastr: ToastrService,
+    private spinner: NgxSpinnerService) { }
 
 
   public alterarImagem(): void {
@@ -48,7 +52,14 @@ export class EventosComponent  {
   }
 
   public ngOnInit() : void{
+    this.spinner.show();
     this.getEventos();
+
+   /* setTimeout(() => {
+      this.spinner.hide();
+
+
+    }, 5000); */
   }
 
 
@@ -64,24 +75,40 @@ export class EventosComponent  {
   //}
 
   public getEventos(): void{
-    const observer = {
+   /* const observer = {
       next:(eventos: Evento[]) => {
         this.eventos = eventos;
         this.eventosFltrados =this.eventos;
       },
-
-      error: (error: any) => console.log(error)
+      error: (error: any) => {
+        this.spinner.hide();
+        this.toastr.error('Erro ao carregar os eventos', 'Error!');
+      },
+     // complete: () => this.spinner.hide()
     };
 
-    this.eventoService.getEventos().subscribe(observer);
+    */
+
+    this.eventoService.getEventos().subscribe({
+      next:(eventos: Evento[]) => {
+        this.eventos = eventos;
+        this.eventosFltrados =this.eventos;
+      },
+      error: (error: any) => {
+        this.spinner.hide();
+        this.toastr.error('Erro ao carregar os eventos', 'Error!');
+      },
+       complete: () => this.spinner.hide()
+    });
   }
 
   openModal(template: TemplateRef<any>): void {
     this.modalRef = this.modalService.show(template, { class: 'modal-lg' });
   }
 
-  confirm() {
+  confirm(): void {
      this.modalRef?.hide();
+     this.toastr.success('Evento deletado com sucesso.', 'Deletado');
   }
 
   decline() {

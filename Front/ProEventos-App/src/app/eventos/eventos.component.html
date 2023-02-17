@@ -49,7 +49,8 @@
       <td>{{evento.local}}</td>
       <td>{{evento.dataEvento | DateFormatPipe}}</td>
       <td>{{evento.qtdPessoas}}</td>
-      <td>{{evento.lotes[0].nome | uppercase}}</td>
+      <td>{{evento.qtdPessoas}}</td>
+     <!-- <td>{{evento.lotes[0]?.nome | uppercase}}</td> -->
       <td>
           <button type="button" class="btn btn-primary btn-sm mr-2" tooltip="Editar">
             <i class='fa fa-edit'></i>
@@ -70,15 +71,16 @@
 </table>
 
 
-<!--{{eventos | json}} -->
+<!-- {{eventos | json}} -->
 
-<button type="button" class="btn btn-primary" (click)="openModal(template)">Open modal</button>
-<br><br>
 <!--<pre class="card card-block card-header">{{message}}</pre>-->
 <ng-template #template>
-  <div class="modal-body text-center">
-    <p>Deseja excluir o evento?</p>
-    <button type="button" class="btn btn-default" (click)="confirm()" >Sim</button>
-    <button type="button" class="btn btn-primary" (click)="decline()" >Não</button>
+  <div class="modal-dialog modal-sm">
+    <div class="modal-body text-center">
+      <p>Deseja excluir o evento?</p>
+      <button type="button" class="btn btn-default" (click)="confirm()" >Sim</button>
+      <button type="button" class="btn btn-primary" (click)="decline()" >Não</button>
+    </div>
   </div>
+
 </ng-template>
